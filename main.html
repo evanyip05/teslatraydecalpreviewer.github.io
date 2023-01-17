@@ -1,0 +1,151 @@
+<html>
+
+<head>
+<style>
+    .imageOverlay {
+        position: relative;
+    	display: inline;
+		
+    }
+	
+	.trayDisplay {
+		position: absolute;
+	}
+	
+	.decalDisplay {
+	    position: absolute;
+	}
+</style>
+</head>
+
+<body>
+    <div class="imageOverlay">	
+		<img width="500" height="500" src="" id="trayRender" class="trayDisplay"></img>
+	    <img width="300" height="300" src="" id="decalRender" class="decalDisplay"></img> 
+	</div>	
+    <br>			
+	<h1>svg</h3>					
+	<input id="fileSVG" type="file" accept=".svg"></input><br>
+    <button id="submitSVGFile">submit</button><br>
+</body>
+
+<script>
+
+const SVGRender = document.getElementById("decalRender");
+const SVGField = document.getElementById("fileSVG");
+const SVGSubmit = document.getElementById("submitSVGFile");
+const trayRender = document.getElementById("trayRender");
+const traySVG = "<svg width=\"300.000000pt\" height=\"310.000000pt\" viewBox=\"0 0 300.000000 310.000000\">\n"+
+"<g transform=\"translate(0.000000,310.000000) scale(0.100000,-0.100000)\" fill=\"#000000\" stroke=\"none\">\n"+
+"<path d=\"M175 2878 c-3 -7 -4 -614 -3 -1348 l3 -1335 1299 -3 c1033 -2 1301 0 1308 10 4 7 8 609 8 1338 0 1018 -3 1329 -12 1338 -18 18 -2597 17 -2603 0z m2593 -1332 c1 -915 -1 -1323 -8 -1330 -12 -12 -2278 -21 -2467 -10 l-103 6 0 1329 0 1329 1288 -2 1287 -3 3 -1319z\"/>\n"+
+"<path d=\"M280 1540 l0 -1300 398 2 397 3 0 1295 0 1295 -397 3 -398 2 0 -1300z m53 1278 c15 -12 17 -106 18 -1257 0 -1203 0 -1245 -18 -1270 -11 -13 -25 -27 -31 -29 -9 -3 -12 292 -12 1276 0 703 3 1282 7 1285 9 10 17 9 36 -5z m727 -1139 l0 -1139 -345 0 -345 0 0 1140 0 1140 208 2 c114 2 269 2 345 0 l137 -3 0 -1140z m-2 -1286 l3 -133 -366 0 -366 0 20 26 c18 23 21 41 21 129 0 56 3 105 7 108 4 4 158 6 342 5 l336 -3 3 -132z\"/>\n"+
+"<path d=\"M1114 2827 c-2 -7 -3 -591 -2 -1298 l3 -1284 780 0 780 0 3 1298 2 1297 -780 0 c-632 0 -782 -2 -786 -13z m1474 -1144 l2 -1143 -730 0 -730 0 0 1144 0 1145 728 -2 727 -2 3 -1142z m72 -139 c0 -1013 -3 -1278 -13 -1276 -6 2 -20 12 -29 24 -17 19 -18 94 -18 1273 l0 1254 28 3 c15 2 28 3 29 2 2 0 3 -576 3 -1280z m-85 -1026 c2 -2 7 -51 11 -108 3 -62 12 -114 20 -127 l14 -23 -745 0 -745 0 0 125 c0 115 2 126 19 133 20 7 1419 8 1426 0z\"/>\n"+
+"</g>\n"+
+"</svg>\n";
+
+const tray = document.createElement("svg");
+tray.innerHTML = traySVG;
+
+trayRender.src = URL.createObjectURL(tray);
+			
+
+SVGSubmit.addEventListener("click", async () => {
+    const data = await SVGField.files;
+    svgRender.src = URL.createObjectURL(data[0]);
+});
+
+function svgFromRaw(raw) {
+    const svgObj = document.createElement("svg");
+    svgObj.innerHTML = raw;
+	return svgObj;
+}
+/*
+---------------------------------------------------------------------------------------
+
+const textField = document.getElementById("fileText");
+const textSubmit = document.getElementById("submitTextFile");
+
+textSubmit.addEventListener("click", async () => {
+    const data = await textField.files;
+	const res = await data[0].text();
+	console.log(res);
+});
+
+function append(string, id){
+    const element = document.getElementById(id);
+    element.innerHTML += string; 
+}
+
+<h1>text</h1>
+<input id="fileText" type="file" accept=".txt"></input><br>
+<button id="submitTextFile">submit</button><br>
+
+---------------------------------------------------------------------------------------
+
+const circle = document.getElementById("circleSVG");
+
+const circleGeom = circle.children;
+const circleLength = circleGeom[0].getTotalLength();
+const points = 100;
+const dl = circleLength/points;
+
+for (let i = 0; i < points; ++i) {const point = circleGeom[0].getPointAtLength(dl*i);}
+
+---------------------------------------------------------------------------------------
+
+<p id="textOut">output<br></p>
+
+<input id="textIn">append</input><br>
+<button id="submit">submit</button><br>	
+
+const textField = document.getElementById("textIn");
+const textSubmit = document.getElementById("submit");
+
+textSubmit.addEventListener("click", () => {
+  append(textField.value, "textOut");
+  textField.value = "";
+});
+
+---------------------------------------------------------------------------------------
+
+const svgW = await svgObj.width;
+  
+  console.log(svgObj.children[0].attributes[2]);
+  
+  SVG.innerHTML = res;  
+  
+  SVG.children[0].attributes[2] = 1000;
+  
+  console.log();
+  
+    const svgObj = document.createElement("svg"); // dom object
+  svgObj.innerHTML = res;
+  
+---------------------------------------------------------------------------------------
+ 
+   const svgObj = document.createElement("svg");
+  svgObj.innerHTML = res;
+
+  SVG.innerHTML = res;  
+  
+  console.log(svgObj);
+  
+  //const bounds = SVG.getBBox();
+
+  
+  //console.log(bounds);
+  //console.log(SVG.getAttribute("viewBox"));
+  
+  //SVG.setAttribute("viewBox",[0,0,100,100].join(" "));
+  
+  const svgSeperated = await data[0];
+  
+  const svgFile = await URL.createObjectURL(data[0]);
+  
+  console.log(svgFile);
+  
+---------------------------------------------------------------------------------------
+
+*/
+</script>
+</html>
